@@ -7,7 +7,7 @@ public class City {
         this.index = index;
     }
 
-    public void setName(String label) {
+    public void setLabel(String label) {
         this.label = label;
     }
 

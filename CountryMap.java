@@ -1,7 +1,7 @@
 public class CountryMap {
     private City[] cities;
     private int[][] roads; 
-    private int cityCount = 0;
+    private int cityNumbers = 0;
 
     public CountryMap(int size) {
         cities = new City[size];
@@ -25,18 +25,18 @@ public class CountryMap {
     public int [][] getRoads (){
         return roads;
     }
-    public void setCityCount (int cityCount){
-        this.cityCount = cityCount;
+    public void setCityNumbers (int cityNumbers){
+        this.cityNumbers = cityNumbers;
     }
-    public int getCityCount(){
-        return cityCount;
+    public int getCityNumbers(){
+        return cityNumbers;
     }
 
     public void addCity(String label) {
-        cities[cityCount++] = new City(label, cityCount - 1);
+        cities[cityNumbers++] = new City(label, cityNumbers - 1);
     }
     int getCityIndex(String label) {
-        for (int i = 0; i < cityCount; i++) {
+        for (int i = 0; i < cityNumbers; i++) {
             if (cities[i].getLabel().equals(label)) {
                 return i;
             }
@@ -44,7 +44,7 @@ public class CountryMap {
         return -1; 
     }
 
-    public void addRoute(String city1, String city2, int time) {
+    public void addRoads(String city1, String city2, int time) {
         int index1 = getCityIndex(city1);
         int index2 = getCityIndex(city2);
         if (index1 != -1 && index2 != -1) {
