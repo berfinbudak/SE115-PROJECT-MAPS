@@ -1,25 +1,25 @@
 public class City {
-    private String label;
-    private int index;
+    private String name;
+    private int ind;
 
-    City(String label, int index) {
-        this.label = label;
-        this.index = index;
+    City(String name, int ind) {
+        this.name = name;
+        this.ind = ind;
     }
 
-    public void setLabel(String label) {
-        this.label = label;
+    public void setName(String name) {
+        this.name = name;
+    } 
+
+    public String getName() {
+        return name;
     }
 
-    public String getLabel() {
-        return label;
+    public void setInd(int ind) {
+        this.ind = ind;
     }
 
-    public void setIndex(int index) {
-        this.index = index;
-    }
-
-    public int getIndex() {
-        return index;
+    public int getInd() {
+        return ind;
     }
 }

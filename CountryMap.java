@@ -1,15 +1,15 @@
 public class CountryMap {
     private City[] cities;
-    private int[][] roads; 
-    private int cityNumbers = 0;
+    private int[][] road; 
+    private int cityNumber = 0;
 
     public CountryMap(int size) {
         cities = new City[size];
-        roads = new int[size][size];
+        road = new int[size][size];
 
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                roads[i][j] = Integer.MAX_VALUE;
+                road[i][j] = Integer.MAX_VALUE;
             }
         }
     }
@@ -19,37 +19,39 @@ public class CountryMap {
     public City[] getCity(){
         return cities;
     }
-    public void setRoads(int[][]roads){
-        this.roads = roads;
+    public void setRoad(int[][]road){
+        this.road = road;
     }
-    public int [][] getRoads (){
-        return roads;
+    public int [][] getRoad (){
+        return road;
     }
-    public void setCityNumbers (int cityNumbers){
-        this.cityNumbers = cityNumbers;
+    public void setCityNumber (int cityNumber){
+        this.cityNumber = cityNumber;
     }
-    public int getCityNumbers(){
-        return cityNumbers;
+    
+    public int getCityNumber(){
+        return cityNumber;
     }
 
-    public void addCity(String label) {
-        cities[cityNumbers++] = new City(label, cityNumbers - 1);
+    public void addCity(String name) {
+        cities[cityNumber++] = new City(name, cityNumber - 1);
     }
-    int getCityIndex(String label) {
-        for (int i = 0; i < cityNumbers; i++) {
-            if (cities[i].getLabel().equals(label)) {
+    
+    int getCityIndex(String name) {
+        for (int i = 0; i < cityNumber; i++) {
+            if (cities[i].getName().equals(name)) {
                 return i;
             }
         }
         return -1; 
     }
 
-    public void addRoads(String city1, String city2, int time) {
-        int index1 = getCityIndex(city1);
-        int index2 = getCityIndex(city2);
-        if (index1 != -1 && index2 != -1) {
-            roads[index1][index2] = time;
-            roads[index2][index1] = time; 
+    public void addRoad(String city1, String city2, int time) {
+        int ind1 = getCityIndex(city1);
+        int ind2 = getCityIndex(city2);
+        if (ind1 != -1 && ind2 != -1) {
+            road[ind1][ind2] = time;
+            road[ind2][ind1] = time; 
         }
     }
-}
+} 
