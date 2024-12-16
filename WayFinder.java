@@ -15,25 +15,30 @@ public class WayFinder {
     }
 
     
-    public String findShortestPath(String start, String end) {
-        int startIdx = map.getCityIndex(start); 
-        int endIdx = map.getCityIndex(end);
+    public String findShortestPath(String start, String end) { //Belirtilen başlangıç ve bitiş şehirleri arasında en kısa yolu bulur.
+        int startIdx = map.getCityIndex(start); //String start: Başlangıç şehri adı.
+        int endIdx = map.getCityIndex(end); //String end: Bitiş şehri adı
+
     
-        if (startIdx == -1 || endIdx == -1) {
+        if (startIdx == -1 || endIdx == -1) {   
             return "Invalid start or end city.";
         }
+        //getCityIndex ile başlangıç (start) ve bitiş (end) şehirlerinin indekslerini alır.
+        //eğer bir şehir bulunamazsa (-1), geçersiz şehir mesajı döner.
+    
     
         
-        int[] distances = new int[map.getCityNumber()];
-        int[] previous = new int[map.getCityNumber()];
-        boolean[] visited = new boolean[map.getCityNumber()];
+        int[] distances = new int[map.getCityNumber()]; //Her şehir için başlangıçtan olan en kısa mesafeyi tutar
+        int[] previous = new int[map.getCityNumber()];//Her şehrin en kısa yolda hangi şehirden geldiğini tutar
+        boolean[] visited = new boolean[map.getCityNumber()]; //Şehirlerin ziyaret edilip edilmediğini tutar
     
         for (int i = 0; i < map.getCityNumber(); i++) {
-            distances[i] = Integer.MAX_VALUE; 
-            previous[i] = -1;                 
+            distances[i] = Integer.MAX_VALUE; // Set all distances to "infinity"
+            previous[i] = -1;                 // Initialize previous to -1 (no path)
         }
     
-        distances[startIdx] = 0; 
+        distances[startIdx] = 0; // Start city has 0 distance
+
     
         for (int i = 0; i < map.getCityNumber(); i++) {
             for (int j = 0; j < map.getCityNumber(); j++) {
