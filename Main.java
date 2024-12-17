@@ -4,19 +4,21 @@ import java.io.IOException;//dosya işlemi sırasında oluşabilecek hataları y
 import java.util.Scanner;// kullanıcı girişi alıp okumak için
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) {//Kullanıcıdan bir dosya adı girme bloku
         Scanner scanner = new Scanner(System.in);//kullanıcıdan giriş almak için Scanner nesnesi oluşturulur
         System.out.print("Enter input file name: ");
         String inputFileName = scanner.nextLine();//kullanıcının girdiği dosya adı String değişkenine kaydedilir
 
-        try {
+        try {//Dosya Okuma Bloku
+            
+            
             File inputFile = new File(inputFileName);//kullanıcının verdiği dosya adıyla File nesnesi oluşturulur
             Scanner fileScanner = new Scanner(inputFile);//dosyayı okumak için Scanner nesnesi oluşturulur
 
             int lineNumber = 0; //Hangi satırda olduğumuzu takip eder. Hata mesajları verirken kullanılacaktır.
             boolean validFile = true; //Dosyanın geçerli olup olmadığını izler eğer bir hata bulunursa bu değişken false yapılır
 
-            
+            //Şehir Sayısını Okuma bloku
             lineNumber++;//1 olur
             int cityNumber = 0;//Dosyadan okunan şehir sayısını saklamak için kullanılır.
 
@@ -35,7 +37,7 @@ public class Main {
                 validFile = false;//validFile değişkeni false yapılır
             }
 
-            
+            //Şehir Adlarını Okuma Bloku
             lineNumber++;//2 olur
             String[] cityNames = new String[0];//cityNames adlı String dizisi tanımlanır boş dizi ayarlanır
             if (fileScanner.hasNextLine()) {//dosyada 2.satır varsa işem başlatılır
@@ -50,7 +52,7 @@ public class Main {
                 validFile = false;//Hata mesajı yazdırılır.validFile değişkeni false yapılır,
             }
 
-            
+            //Yol Sayısını Okuma Bloku
             lineNumber++;//satır sayısı 3 olur
             int roadCount = 0;//roadCount adında bir tam sayı değişkeni oluşturulur ve başlangıç değeri 0 olarak atanır.
            //dosyanın üçüncü satırında belirtilen yol sayısını saklamak için kullanılır.
@@ -59,7 +61,6 @@ public class Main {
                //Okunan satırdaki baştaki ve sondaki boşluklar temizlenir (trim()).
              try {//dosyadan alınan yol sayısını metinden inte çevirmektir.
                     roadCount = Integer.parseInt(roadCountLine);//Integer.parseInt() fonksiyonu, bir metni (String) tam sayıya (int) dönüştürür.
-                    //Örneğin, "5" metni tam sayıya çevrilerek roadCount değişkenine atanır.
                 } catch (NumberFormatException e) {//hata oluşursa bu blok devreye girer.
                     System.out.println("error on line " + lineNumber +  "the format of the route count is invalid");
                     validFile = false;
@@ -70,12 +71,12 @@ public class Main {
                 validFile = false;
             }
 
-            
+            //Harita Oluşturma ve Şehir Eklemek Bloku
             CountryMap map = new CountryMap(cityNumber);//Harita nesnesi, şehir sayısına göre oluşturulur.
             for (String city : cityNames) {
                 map.addCity(city);// Şehir adları haritaya eklenir.
             }
-
+         //Yol Bilgilerini Okuma Bloku
             for (int i = 0; i < roadCount; i++) {//belirtilen yol sayısı kadar
                 lineNumber++;//satır numarasını artırır
                 if (fileScanner.hasNextLine()) {
@@ -96,7 +97,7 @@ public class Main {
                     validFile = false;
                 }
             }
-
+        // Başlangıç ve Bitiş Şehirlerini Okuma Bloku
             lineNumber++; // Satır numarasını artır.
             String start = "", end = ""; // Başlangıç ve bitiş şehirlerini tutacak değişkenler.
             if (fileScanner.hasNextLine()) {
@@ -114,7 +115,8 @@ public class Main {
             }
 
             fileScanner.close(); //dosyayı kapama
-
+ 
+        //En Kısa Yol Hesaplama Bloku
             if (validFile) { // Eğer dosya geçerliyse
                 System.out.println("File read is successful!");
 

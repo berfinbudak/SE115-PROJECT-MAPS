@@ -40,10 +40,10 @@ public class WayFinder {
         distances[startIdx] = 0; // Start city has 0 distance
 
     
-        for (int i = 0; i < map.getCityNumber(); i++) { //her şehir için döngü yapılır
-            for (int j = 0; j < map.getCityNumber(); j++) {
+        for (int i = 0; i < map.getCityNumber(); i++) { //her şehir için döngü yapılır,checks the shortest path for each city
+            for (int j = 0; j < map.getCityNumber(); j++) { // this loop checks the unvisited cities that have a road connection. 
                 
-                if (!visited[j] && map.getRoad()[i][j] != Integer.MAX_VALUE) { //Eğer bir şehir henüz ziyaret edilmediyse (!visited[j]) ve iki şehir arasında yol varsa (map.getRoad()[i][j] != Integer.MAX_VALUE), işlem yapılır.
+                if (!visited[j] && map.getRoad()[i][j] != Integer.MAX_VALUE) { //Eğer bir şehir henüz ziyaret edilmediyse (!visited[j]) ve iki şehir arasında yol varsa işlem yapılır.
                     int newDist = distances[i] + map.getRoad()[i][j]; //Mevcut şehirden (i) diğer şehre (j) olan toplam mesafe hesaplanır.
 
                     if (newDist < distances[j]) { //Eğer yeni mesafe, mevcut mesafeden küçükse
@@ -57,25 +57,26 @@ public class WayFinder {
         }
     
         if (distances[endIdx] == Integer.MAX_VALUE) {
-            return "No path found."; //bitiş şehri hâlâ sonsuz mesafe olarak işaretlenmişse, yolun bulunamadığını belirtmek
+            return "No path found."; //bitiş şehri hâlâ sonsuz mesafe olarak işaretlenmişse, yolun bulunamadığını belirtirir
         }
     
-        String path = reconstructPath(previous, startIdx, endIdx); //previous dizisi kullanılarak en kısa yolun adım adım oluşturulması.
-       // İşleyiş: Bu işlem reconstructPath adlı yardımcı metotta yapılır.
+        String path = reconstructPath(previous, startIdx, endIdx); //reconstructPath metodu, previous[] dizisini kullanarak yolu geri izler ve oluşturur.
+
         return "Fastest Way: " + path + "\nTotal Time: " + distances[endIdx] + " min";
-    } //En kısa yolu ve toplam süreyi bir metin formatında döndürmek.
+    } //En kısa yolu ve toplam süreyi bir metin formatında döndürür.
     
-    private String reconstructPath(int[] previous, int start, int end) { //int start: Başlangıç şehri indeksi.int end: Bitiş şehri indeksi.
-        String path = ""; //int[] previous: En kısa yoldaki bir önceki şehirleri tutar.
-        int current = end; //
+    //int start başlangıç şehrinin indeksi,int end bitiş şehrinin indeksi.
+
+    private String reconstructPath(int[] previous, int start, int end) { //Bu dizi, her bir şehir için bir önceki şehri tutar.
+        String path = ""; //Güzergâhı oluşturacak string değişkeni. Başlangıçta boş bir string olarak başlatılır.
+        int current = end; //Şu anki şehir indeksini tutar. Bitiş şehrinin indeksi ile başlatılır
     
-        while (current != -1) { //Bitiş şehrinden başlayarak previous dizisini takip ederek yolu oluşturmak.
-            path = map.getCity()[current].getName() + (path.isEmpty() ? "" : " -> ") + path;
-            current = previous[current];
-        } //current şehri, başlangıç şehrine ulaşılana kadar döngüyle işlenir.
-        // Şehrin adı, yolun başına eklenir.
-       // current, bir önceki şehre (previous[current]) ayarlanır.
+        while (current != -1) { //Döngü, current değeri -1 olana kadar devam eder.-1 değeri, başlangıç şehrine ulaşıldığını belirtir.
+            path = map.getCity()[current].getName() + (path.isEmpty() ? "" : " -> ") + path;//current indeksindeki şehrin adını döner.path boşsa sadece şehir adı eklenir.
+                                                                                            // Eğer path boş değilse, " -> " eklenerek şehir adı birleştirilir.
+         current = previous[current];//previous dizisini kullanarak bir önceki şehre geçilir.
+        } 
     
-        return path; // tam yolu döndürmek
+        return path; //ath stringi, şehir adlarının bitişten başlangıca doğru birleştirilmiş halini döner.
     }
 }
